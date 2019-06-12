@@ -1,0 +1,25 @@
+.slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: brown;
+}
+
+.slider-container {
+  position: relative;
+}
+
+.left,
+.right {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+}
+
+.right {
+  left: initial;
+  right: 20px;
+}

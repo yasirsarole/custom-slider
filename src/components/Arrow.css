@@ -1,0 +1,9 @@
+.left,
+.right {
+  background: white;
+  cursor: pointer;
+  display: none;
+}
+
+.left.show,
+.right.show { display: block; }

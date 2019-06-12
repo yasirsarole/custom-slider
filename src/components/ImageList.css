@@ -1,0 +1,46 @@
+figure {
+  width: 50%;
+  height: auto;
+  margin: 0;
+  display: none;
+}
+
+figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+figure.current {
+  display: block;
+}
+
+figure.prev{
+  animation: slidePrev 0.5s linear;
+}
+
+figure.next{
+  animation: slideNext 0.5s linear;
+}
+
+@keyframes slidePrev {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes slideNext {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
