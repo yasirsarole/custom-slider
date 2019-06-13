@@ -3,11 +3,7 @@ import "./Arrow.css";
 
 class Arrow extends React.Component {
   onArrowClick = e => {
-    if (e.target.classList.contains("left")) {
-      this.props.onArrowClick("left");
-    } else {
-      this.props.onArrowClick("right");
-    }
+    this.props.onArrowClick(e);
   };
 
   render() {

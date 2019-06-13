@@ -6,7 +6,7 @@ import AddButton from "./AddButton";
 import "./App.css";
 
 class App extends React.Component {
-  state = { images: [], arrow: "" };
+  state = { images: [], arrow: "", buttonCount: "" };
 
   onAddImageClick = async count => {
     const response = await unsplash.get("/search/photos", {
@@ -18,29 +18,35 @@ class App extends React.Component {
     });
 
     if (count === 1) {
-      this.setState({ images: response.data.results });
+      this.setState({ images: response.data.results, buttonCount: count });
     } else if (count > 1) {
-      this.setState({ images: response.data.results, arrow: "show" });
+      this.setState({
+        images: response.data.results,
+        arrow: "show",
+        buttonCount: count
+      });
     }
   };
 
-  onArrowClick = direction => {
-    const currentSlide = document.getElementsByClassName("current")[0],
-      slides = document.querySelectorAll("figure");
+  onArrowClick = e => {
+    const slides = [...this.slideRef.children[0].children],
+      currentSlide = slides.filter(current => {
+        return current.classList.contains("current");
+      });
 
     slides.forEach(slide => {
       slide.classList.remove(...["next", "prev", "current"]);
     });
 
-    if (direction === "left") {
-      if (!currentSlide.classList.contains("first")) {
-        currentSlide.previousSibling.classList.add(...["prev", "current"]);
+    if (e.target.classList.contains("left")) {
+      if (!currentSlide[0].classList.contains("first")) {
+        currentSlide[0].previousSibling.classList.add(...["prev", "current"]);
       } else {
         slides[slides.length - 1].classList.add(...["prev", "current"]);
       }
     } else {
-      if (!currentSlide.classList.contains("last")) {
-        currentSlide.nextSibling.classList.add(...["next", "current"]);
+      if (!currentSlide[0].classList.contains("last")) {
+        currentSlide[0].nextSibling.classList.add(...["next", "current"]);
       } else {
         slides[0].classList.add(...["next", "current"]);
       }
@@ -56,8 +62,16 @@ class App extends React.Component {
           onArrowClick={this.onArrowClick}
           nameDirection="left"
         />
-        <div className="slide">
-          <ImageList images={this.state.images} />
+        <div
+          className="slide"
+          ref={ref => {
+            this.slideRef = ref;
+          }}
+        >
+          <ImageList
+            buttonCount={this.state.buttonCount}
+            images={this.state.images}
+          />
         </div>
         <Arrow
           showArrow={this.state.arrow}
